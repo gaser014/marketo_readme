@@ -1,62 +1,20 @@
-# Marketo: The Ultimate E-Commerce Admin and User Flutter App
+# Marketo: The Ultimate E-Commerce User Flutter App
 
-Marketo provides an all-in-one Flutter application tailored for both admin and user roles .It is designed to simplify
-e-commerce management and enhance user experiences .With its comprehensive features, this app enables admins to
-efficiently manage their platform while providing users with a seamless shopping experience.
-
-## Administrative Interface
-
-### Features Overview
-
-- **Product Management**:
-    - Add, edit, and remove products
-    - Manage product variants and pricing
-    - Upload product images and descriptions
-    - Track inventory levels
-
-- **Category Management**:
-    - Create and organize main categories
-    - Manage sub-categories
-    - Link products to appropriate categories
-
-- **Promotional Tools**:
-    - Create and manage special offers
-    - Generate and track coupon codes
-    - Design promotional sliders
-    - Configure homepage featured sections
-
-- **Order Management**:
-    - Track all incoming orders
-    - Update order status
-    - Monitor delivery progress
-    - Access order history and analytics
-
-### Key Administrative Screens
-
-1. Dashboard Overview
-2. Product Management Console
-3. Category Configuration
-4. Offer Management
-5. Coupon Administration
-6. Order Tracking System
-7. Slider Configuration
-8. Analytics and Reports
+Marketo delivers a seamless Flutter application tailored for users, enhancing their shopping experience. Designed to integrate with Shopify, it provides a clean and efficient platform for browsing and purchasing products.
 
 ## Customer Interface
 
 ### Features Overview
 
 - **Personalized Shopping Experience**:
-    - Browse dynamic homepage sliders
     - Explore categorized products
-    - View special offers and deals
-    - Access personalized recommendations
+    - Access personalized recommendations based on browsing history
 
 - **Product Discovery**:
-    - Browse by categories and subcategories
+    - Browse by main categories
     - Search products by name
     - Filter products by various attributes
-    - View "Best Seller" collections
+    - View "Limited Quantity"
     - Explore "New Arrivals"
 
 - **Shopping Features**:
@@ -67,12 +25,12 @@ efficiently manage their platform while providing users with a seamless shopping
 
 ### Key Customer Screens
 
-1. Home Screen (with sliders and featured sections)
+1. Home Screen
 2. Category Browse
 3. Product Search
 4. Product Details
 5. Shopping Cart
-6. Checkout Process
+6. Checkout Process With Shopify 
 7. Order History
 8. Account Management
 
@@ -82,8 +40,6 @@ efficiently manage their platform while providing users with a seamless shopping
 
 - Arabic (ar)
 - English (en)
-- French (fr)
-- German (de)
 
 ### Order Processing
 
@@ -94,41 +50,67 @@ efficiently manage their platform while providing users with a seamless shopping
 5. Order confirmation with unique ID
 6. Status tracking
 
-### Integration Requirements
 
-- Backend documentation review required for admin account setup
-- API integration for product and order management
-- Database configuration for multi-language support
-- A secure authentication system for both interfaces
+## **Integration with Shopify**
+
+To integrate with Shopify, follow these steps:
+
+- **Develop App in Shopify**:
+    - Navigate to **Settings** -> **Apps** -> **App Development** -> **Create an App**.
+    - Add any name for the app and click **Create App**.
+- **Generate Access Tokens**:
+    - For the newly created app, generate:
+        - **X-Shopify-Access-Token**
+        - **X-Shopify-Storefront-Access-Token**
+
+    - **Configure API Permissions**:
+        - Go to your app's configuration and ensure you have permissions for example:
+            - **read_products**
+            - **write_products**
+            - **read_collections**
+            - **write_collections**
+
+These tokens and permissions will be used to interact with Shopify's API to fetch products, manage orders, and handle user data, allowing you to add your products and collections to the app channel.
+
+### **Key Differences:**
+
+| **Token Type**               | **Admin API Token**                     | **Storefront API Token**                |
+|------------------------------|------------------------------------------|------------------------------------------|
+| **Usage**                    | Backend operations (REST/GraphQL)        | Frontend customer interactions (GraphQL)|
+| **Example Header**           | `X-Shopify-Access-Token`                 | `X-Shopify-Storefront-Access-Token`     |
+| **Access**                   | Full store management                    | Limited to storefront data              |
+
+---
+
+Now, to add the TODO in the `lib/core/databases/graphql/graph_ql.dart` file, including the new permissions and the addition of products and collections:
 
 ## How to Get and Run the App
 
-Follow these steps to set up and run the e-commerce app on your local machine:
-
 ### Prerequisites
 
-1. Ensure you have Flutter installed on your system. Follow the installation guide
-   at [Flutter.dev](https://flutter.dev/docs/get-started/install).
-2. Install an editor like [VS Code](https://code.visualstudio.com/)
-   or [Android Studio](https://developer.android.com/studio).
+1. Ensure you have Flutter installed on your system. Follow the installation guide at [Flutter.dev](https://flutter.dev/docs/get-started/install).
+2. Install an editor like [VS Code](https://code.visualstudio.com/) or [Android Studio](https://developer.android.com/studio).
 3. Set up an Android emulator or connect a physical device.
 
 ### Steps to Get and Run the App on Your Local Machine
 
-1. Clone the repository
-2. Navigate to the project directory
-3. Fetch the dependencies by running "flutter pub get"
-4. Run the app on your connected device or emulator by running "flutter run
-### Steps to add new language
-      you can add a new language by following these steps or you can check the todo list in the project to see the steps in lib/core/enum/enums.dart, main.dart and my_app.dart
-1. Add a new JSON file in the assets/lang folder with the language code as the filename (e.g., fr.json for French).
-2. Add the translations in the JSON file in the following format:
-```json
-{
-  "key": "value",
-  "key2": "value2"
-}
-```
-you can use en.json as a reference.
-3. Update the supportedLocales list in the main.dart and my_app file with the new language code.
-4. Add the new language to the dropdown by updating the languageList in lib/core/enum/enums.dart
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Fetch the dependencies by running `flutter pub get`.
+4. Run the app on your connected device or emulator by executing `flutter run`.
+
+### Steps to Add a New Language
+
+You can add a new language by following these steps or check the TODO list in the project:
+
+1. Add a new JSON file in the `assets/lang` folder with the language code as the filename (e.g., `fr.json` for French).
+2. Add translations in the JSON file in the following format:
+   ```json
+   {
+     "key": "value",
+     "key2": "value2"
+   }
+   ```
+   Use `en.json` as a reference.
+3. Update the `supportedLocales` list in `main.dart` and `my_app.dart` with the new language code.
+4. Add the new language to the dropdown by updating the `languageList` in `lib/core/enum/enums.dart`.
