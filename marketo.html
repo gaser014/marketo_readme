@@ -1,0 +1,614 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketo: The Ultimate E-Commerce Admin and User Flutter App</title>
+    <style>
+        /* Updated theme with orange primary color */
+        :root {
+            --primary-color: #F7931E; /* Changed to 0xFFF7931E */
+            --secondary-color: #FFA94D; /* Adjusted to complement the new primary color */
+            --accent-color: #ffb838;
+            --text-color: #2d3748;
+            --light-text: #718096;
+            --bg-light: #f7fafc;
+            --bg-dark: #1a202c;
+            --border-color: #e2e8f0;
+            --success-color: #38a169;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: #fafafa;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0 80px;
+            position: relative;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .lead {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--primary-color); /* Changed to match primary color */
+            margin: 25px 0 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-gallery img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 3px solid var(--primary-color); /* Changed to primary color */
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        /* Feature lists */
+        .feature-list {
+            list-style-type: none;
+            padding-left: 5px;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        /* Setup and credentials sections */
+        .setup-section, .credentials {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .credentials {
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Code blocks */
+        code {
+            background-color: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            color: var(--primary-color);
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--bg-light);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            line-height: 1.5;
+        }
+
+        /* Contact section */
+        .contact {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .contact h2 {
+            text-align: center;
+        }
+
+        .contact h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color); /* Changed to primary color */
+            color: white; /* Changed for better contrast with orange */
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(247, 147, 30, 0.3); /* Updated shadow color */
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(247, 147, 30, 0.4); /* Updated shadow color */
+        }
+
+        /* Specs and tables */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .spec-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--light-text);
+            font-size: 0.9em;
+            margin-top: 60px;
+        }
+
+        /* Download banner */
+        .download-banner {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .download-banner a {
+            color: white;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .download-banner a:hover {
+            text-decoration: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid, .specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Added download banner at the top -->
+<div class="download-banner">
+    <div class="container">
+        <p>Download the Marketo APK now! <a href="https://www.dropbox.com/scl/fi/i2o188bwjdq5u1opmjnva/Marketo-APK.apk?rlkey=g6egyzoa5i8qtsk4jh27bqcy2&e=1&st=pc0eohv7&dl=0" target="_blank">Click here to download</a></p>
+    </div>
+</div>
+
+<header>
+    <div class="container header-content">
+        <h1>Marketo: The Ultimate E-Commerce Solution</h1>
+        <p class="lead">A comprehensive Flutter application designed for both administrators and users, offering powerful management tools and a seamless shopping experience.</p>
+        <a href="#features" class="btn">Explore Features</a>
+    </div>
+</header>
+
+<div class="container">
+    <section>
+        <div class="image-gallery">
+            <img src="https://www.dropbox.com/scl/fi/valxh3oeoo2ih1pu2hjyl/1.png?rlkey=1r21ynxzlw0m6l7jnt1i129g2&st=3ft0l4b9&dl=1" alt="Marketo App Screenshot">
+            <img src="https://www.dropbox.com/scl/fi/jh6ycez7bgunip5z4ym1h/2.png?rlkey=1ciaa3v8a91v0r6dawttkkir1&st=alx8s2wm&dl=1" alt="Marketo App Screenshot">
+            <img src="https://www.dropbox.com/scl/fi/qxz87jflub5jnvywwoql9/3.png?rlkey=saznnl1xd1lx9gjwnia8ka0jh&st=px8hrksl&dl=1" alt="Marketo App Screenshot">
+        </div>
+
+        <div class="image-gallery">
+            <img src="https://www.dropbox.com/scl/fi/aaeco0bs0mkco9eklm8sx/4.png?rlkey=b84e7bz6e5rh5jx195y9k6rcn&st=3wood7es&dl=1" alt="Marketo App Screenshot">
+            <img src="https://www.dropbox.com/scl/fi/hlthns86qqvbwzhwhwmku/5.png?rlkey=iozvhachbaboedoedapfjw4wz&st=2wqeeqtc&dl=1" alt="Marketo App Screenshot">
+            <img src="https://www.dropbox.com/scl/fi/wx3x32qtfqltt58loskkv/6.png?rlkey=aerqf3zlwxpfmykl5s1qfdaly&st=a3z47h5m&dl=1" alt="Marketo App Screenshot">
+        </div>
+    </section>
+
+    <section id="features">
+        <h2>Powerful Features for Your E-Commerce Business</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Product Management</h3>
+                <ul class="feature-list">
+                    <li>Add, edit, and remove products</li>
+                    <li>Manage product variants and pricing</li>
+                    <li>Upload product images and descriptions</li>
+                    <li>Track inventory levels</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Category Management</h3>
+                <ul class="feature-list">
+                    <li>Create and organize main categories</li>
+                    <li>Manage sub-categories</li>
+                    <li>Link products to appropriate categories</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Promotional Tools</h3>
+                <ul class="feature-list">
+                    <li>Create and manage special offers</li>
+                    <li>Generate and track coupon codes</li>
+                    <li>Design promotional sliders</li>
+                    <li>Configure homepage featured sections</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Order Management</h3>
+                <ul class="feature-list">
+                    <li>Track all incoming orders</li>
+                    <li>Update order status</li>
+                    <li>Monitor delivery progress</li>
+                    <li>Access order history and analytics</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Admin Interface Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Dashboard & Analytics</h3>
+                <ul class="feature-list">
+                    <li>Comprehensive dashboard overview</li>
+                    <li>Sales performance metrics</li>
+                    <li>Customer engagement stats</li>
+                    <li>Inventory status reports</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Product Control</h3>
+                <ul class="feature-list">
+                    <li>Product management console</li>
+                    <li>Category configuration</li>
+                    <li>Inventory monitoring</li>
+                    <li>Bulk update capabilities</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Marketing Tools</h3>
+                <ul class="feature-list">
+                    <li>Offer management</li>
+                    <li>Coupon administration</li>
+                    <li>Slider configuration</li>
+                    <li>Featured product settings</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Order Processing</h3>
+                <ul class="feature-list">
+                    <li>Order tracking system</li>
+                    <li>Status update workflows</li>
+                    <li>Customer communication tools</li>
+                    <li>Return management</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Customer Interface Features</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Personalized Shopping</h3>
+                <ul class="feature-list">
+                    <li>Dynamic homepage sliders</li>
+                    <li>Categorized product browsing</li>
+                    <li>Special offers and deals</li>
+                    <li>Personalized recommendations</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Product Discovery</h3>
+                <ul class="feature-list">
+                    <li>Category and subcategory browsing</li>
+                    <li>Advanced product search</li>
+                    <li>Multi-attribute filtering</li>
+                    <li>"Best Seller" collections</li>
+                    <li>"New Arrivals" showcase</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Shopping Experience</h3>
+                <ul class="feature-list">
+                    <li>Detailed product pages with variants</li>
+                    <li>Intuitive shopping cart management</li>
+                    <li>Coupon application system</li>
+                    <li>Real-time order tracking</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>User Account</h3>
+                <ul class="feature-list">
+                    <li>Personal profile management</li>
+                    <li>Order history and status</li>
+                    <li>Saved payment methods</li>
+                    <li>Wishlist functionality</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Technical Specifications</h2>
+
+        <div class="specs-grid">
+            <div class="spec-card">
+                <h3>Multilingual Support</h3>
+                <ul class="feature-list">
+                    <li>Arabic (ar)</li>
+                    <li>English (en)</li>
+                    <li>French (fr)</li>
+                    <li>German (de)</li>
+                </ul>
+            </div>
+
+            <div class="spec-card">
+                <h3>Integration Requirements</h3>
+                <ul class="feature-list">
+                    <li>Backend documentation review</li>
+                    <li>API integration capabilities</li>
+                    <li>Multi-language database configuration</li>
+                    <li>Secure authentication system</li>
+                </ul>
+            </div>
+
+            <div class="spec-card">
+                <h3>Technology Stack</h3>
+                <ul class="feature-list">
+                    <li>Flutter framework</li>
+                    <li>RESTful API architecture</li>
+                    <li>MongoDB database support</li>
+                    <li>JWT authentication</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Getting Started</h2>
+        <div class="setup-section">
+            <h3>Installation & Setup</h3>
+            <p>Follow these steps to set up and run the e-commerce app on your local machine:</p>
+            <p>Please make sure you have Flutter installed on your system. Follow the installation guide at <a href="http://flutter.dev">Flutter.dev</a>.</p>
+            <ol class="feature-list">
+                <li>Install an editor like VS Code or Android Studio</li>
+                <li>Set up an Android emulator or connect a physical device</li>
+                <li>Clone the repository</li>
+                <li>Navigate to the project directory</li>
+                <li>Fetch the dependencies by running <code>flutter pub get</code></li>
+                <li>Run the app on your connected device or emulator with <code>flutter run</code></li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h2>Adding New Languages</h2>
+        <div class="setup-section">
+            <p>You can add a new language by following these steps or check the todo list in the project:</p>
+            <ol class="feature-list">
+                <li>Add a new JSON file in the <code>assets/lang</code> folder with the language code as the filename (e.g., <code>fr.json</code> for French)</li>
+                <li>Add the translations in the JSON file in the following format:</li>
+            </ol>
+            <pre>{
+  "key": "value",
+  "key2": "value2"
+}</pre>
+            <p>You can use <code>en.json</code> as a reference.</p>
+            <ol class="feature-list" start="3">
+                <li>Update the supported locales list in the <code>main.dart</code> and <code>my_app</code> files</li>
+                <li>Add the new language to the dropdown by updating the language list in <code>lib/core/enum/enums.dart</code></li>
+            </ol>
+        </div>
+    </section>
+
+    <div class="credentials">
+        <h2>Default Login Credentials</h2>
+        <p>Thank you for installing the application. Below are your default login credentials to get started:</p>
+        <p><strong>ADMIN USERNAME</strong> = ********_*****</p>
+        <p><strong>ADMIN PASSWORD</strong> = ******mM</p>
+        <p>Note: For security reasons, the actual login credentials will be provided after purchase.</p>
+    </div>
+
+    <section>
+        <h2>Backend API Documentation</h2>
+        <div class="setup-section">
+            <h3>API Architecture:</h3>
+            <ul class="feature-list">
+                <li>RESTful API built with Node.js/Express</li>
+                <li>MongoDB database for data storage</li>
+                <li>JWT authentication</li>
+                <li>MVC architecture pattern</li>
+            </ul>
+
+            <h3>Main Endpoints:</h3>
+            <pre># Authentication
+POST   /api/auth/register
+POST   /api/auth/login
+
+# Users
+GET    /api/users
+GET    /api/users/:id
+PUT    /api/users/:id
+DELETE /api/users/:id
+
+# Products
+GET    /api/products
+POST   /api/products
+GET    /api/products/:id
+PUT    /api/products/:id
+DELETE /api/products/:id
+
+# Orders
+GET    /api/orders
+POST   /api/orders
+GET    /api/orders/:id
+PUT    /api/orders/:id</pre>
+        </div>
+    </section>
+
+    <div class="contact">
+        <h2>Support & Contact</h2>
+        <p>If you have any questions or need assistance, our support team is ready to help.</p>
+        <a href="mailto:moradabdelgaber1@gmail.com" class="btn">moradabdelgaber1@gmail.com</a>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>© 2025 Marketo E-Commerce App. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
